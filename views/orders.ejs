@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quản lý đơn hàng</title>
+    <%- contentFor('styles') %>
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        .status-badge {
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .status-pending { background: #ffd700; }
+        .status-confirmed { background: #90EE90; }
+        .status-cancelled { background: #ffcccb; }
+        .status-completed { background: #98FB98; }
+        .btn {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 5px;
+        }
+        .btn-primary { background: #007bff; color: white; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-danger { background: #dc3545; color: white; }
+
+        /* Thêm CSS cho modal vào đây */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            width: 80%;
+            max-width: 800px;
+            margin: 50px auto;
+            border-radius: 8px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .filter-controls {
+            display: flex;
+            gap: 10px;
+        }
+
+        .order-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .stat-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            margin: 0;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .stat-item p {
+            margin: 10px 0 0;
+            font-size: 24px;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+        select, input[type="text"] {
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .form-group textarea {
+            height: 100px;
+            resize: vertical;
+        }
+    </style>
+</head>
+<body>
+    <%- contentFor('content') %>
+    <div class="container">
+        <h1>Quản lý đơn hàng</h1>
+        <div class="controls">
+            
+            <!-- Thêm bộ lọc đơn hàng -->
+            <div class="filter-controls">
+                <select id="statusFilter" onchange="filterOrders()">
+                    <option value="all">Tất cả trạng thái</option>
+                    <option value="pending">Chờ xác nhận</option>
+    <h1>Quản lý đơn hàng</h1>
+    <div class="controls">
+        <a href="/admin" class="btn btn-primary">Quay lại Dashboard</a>
+        
+        <!-- Thêm bộ lọc đơn hàng -->
+        <div class="filter-controls">
+            <select id="statusFilter" onchange="filterOrders()">
+                <option value="all">Tất cả trạng thái</option>
+                <option value="pending">Chờ xác nhận</option>
+                <option value="confirmed">Đã xác nhận</option>
+                <option value="completed">Hoàn thành</option>
+                <option value="cancelled">Đã hủy</option>
+            </select>
+            
+            <input type="text" id="searchInput" placeholder="Tìm theo mã đơn hoặc SĐT..." 
+                   onkeyup="filterOrders()">
+        </div>
+    </div>
+
+    <!-- Thêm thống kê đơn hàng -->
+    <div class="order-stats">
+        <div class="stat-item">
+            <h3>Tổng đơn hàng</h3>
+            <p><%= orders.length %></p>
+        </div>
+        <div class="stat-item">
+            <h3>Đơn chờ xác nhận</h3>
+            <p><%= orders.filter(o => o.status === 'pending').length %></p>
+        </div>
+        <div class="stat-item">
+            <h3>Doanh thu</h3>
+            <p><%= orders.filter(o => o.status === 'completed')
+                       .reduce((sum, o) => sum + o.totalAmount, 0)
+                       .toLocaleString('vi-VN') %>đ</p>
+        </div>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th onclick="sortTable(0)">Mã đơn hàng ↕</th>
+                <th onclick="sortTable(1)">Khách hàng ↕</th>
+                <th>Số điện thoại</th>
+                <th>Tổng tiền</th>
+                <th>Trạng thái</th>
+                <th>Ngày tạo</th>
+                <th>Hành động</th>
+            </tr>
+        </thead>
+        <tbody id="orderTableBody">
+            <% orders.forEach(function(order) { %>
+                <tr id="order-<%= order.id %>" data-status="<%= order.status %>">
+                    <td><%= order.id %></td>
+                    <td><%= order.customerInfo.name %></td>
+                    <td><%= order.customerInfo.phone %></td>
+                    <td><%= order.totalAmount.toLocaleString('vi-VN') %>đ</td>
+                    <td>
+                        <span class="status-badge status-<%= order.status %>">
+                            <%= {
+                                'pending': 'Chờ xác nhận',
+                                'confirmed': 'Đã xác nhận',
+                                'cancelled': 'Đã hủy',
+                                'completed': 'Hoàn thành'
+                            }[order.status] %>
+                        </span>
+                    </td>
+                    <td><%= new Date(order.createdAt).toLocaleString('vi-VN') %></td>
+                    <td class="actions">
+                        <button onclick="showOrderDetails('<%= order.id %>')" class="btn btn-primary">Chi tiết</button>
+                        <button onclick="showEditOrderModal('<%= order.id %>')" class="btn btn-primary">Chỉnh sửa</button>
+                        <% if (order.status === 'pending') { %>
+                            <button onclick="updateOrderStatus('<%= order.id %>', 'confirmed')" class="btn btn-success">
+                                Xác nhận
+                            </button>
+                            <button onclick="updateOrderStatus('<%= order.id %>', 'cancelled')" class="btn btn-danger">
+                                Hủy
+                            </button>
+                        <% } else if (order.status === 'confirmed') { %>
+                            <button onclick="updateOrderStatus('<%= order.id %>', 'completed')" class="btn btn-success">
+                                Hoàn thành
+                            </button>
+                        <% } %>
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+
+    <!-- Modal chi tiết đơn hàng -->
+    <div id="orderDetailModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <h2>Chi tiết đơn hàng</h2>
+            <div id="orderDetailContent"></div>
+            <button onclick="hideOrderDetails()" class="btn">Đóng</button>
+        </div>
+    </div>
+
+    <!-- Thêm modal chỉnh sửa đơn hàng -->
+    <div id="editOrderModal" class="modal">
+        <div class="modal-content">
+            <h2>Chỉnh sửa đơn hàng</h2>
+            <form id="editOrderForm" onsubmit="updateOrderDetails(event)">
+                <input type="hidden" id="editOrderId" name="id">
+                
+                <div class="form-group">
+                    <label>Tên khách hàng:</label>
+                    <input type="text" id="editCustomerName" name="customerName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Số điện thoại:</label>
+                    <input type="text" id="editCustomerPhone" name="customerPhone" required>
+                </div>
+                
+                <div class="form-group">
+                    <label>Địa chỉ:</label>
+                    <textarea id="editCustomerAddress" name="customerAddress" required></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Ghi chú:</label>
+                    <textarea id="editOrderNote" name="note"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label>Trạng thái:</label>
+                    <select id="editOrderStatus" name="status">
+                        <option value="pending">Chờ xác nhận</option>
+                        <option value="confirmed">Đã xác nhận</option>
+                        <option value="completed">Hoàn thành</option>
+                        <option value="cancelled">Đã hủy</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-primary">Lưu thay đổi</button>
+                <button type="button" onclick="hideEditModal()" class="btn">Hủy</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="/js/modal-handlers.js"></script>
+    <script src="/js/orders.js"></script>
+</body>
+</html> 

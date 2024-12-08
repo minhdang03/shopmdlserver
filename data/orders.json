@@ -1,0 +1,175 @@
+{
+  "orders": [
+    {
+      "id": "order_1",
+      "customerInfo": {
+        "name": "Khách hàng",
+        "phone": "0123456789"
+      },
+      "orderItems": [
+        {
+          "productId": 1,
+          "quantity": 2,
+          "price": 10000,
+          "productName": "Sản phẩm 1"
+        }
+      ],
+      "totalAmount": 20000,
+      "status": "pending",
+      "createdAt": "2024-03-12T00:00:00.000Z"
+    },
+    {
+      "id": "order_1733657219440",
+      "customerInfo": {
+        "name": "Lữ Minh Đăng ",
+        "phone": "0369523467",
+        "email": "",
+        "address": "",
+        "note": ""
+      },
+      "orderItems": [
+        {
+          "productId": 3,
+          "quantity": 2,
+          "price": 29900000,
+          "productName": "Samsung Galaxy S24"
+        },
+        {
+          "productId": 2,
+          "quantity": 1,
+          "price": 45900000,
+          "productName": "MacBook Pro M3"
+        }
+      ],
+      "totalAmount": 105700000,
+      "status": "pending",
+      "createdAt": "2024-12-08T11:26:59.440Z"
+    },
+    {
+      "id": "order_1733658120794",
+      "customerInfo": {
+        "name": "Khách hàng",
+        "phone": "0369523467",
+        "email": "",
+        "address": "",
+        "note": ""
+      },
+      "orderItems": [
+        {
+          "productId": 3,
+          "quantity": 1,
+          "price": 29900000,
+          "productName": "Samsung Galaxy S24"
+        },
+        {
+          "productId": 4,
+          "quantity": 1,
+          "price": 32900000,
+          "productName": "Dell XPS 13"
+        },
+        {
+          "productId": 2,
+          "quantity": 1,
+          "price": 45900000,
+          "productName": "MacBook Pro M3"
+        }
+      ],
+      "totalAmount": 108700000,
+      "status": "pending",
+      "createdAt": "2024-12-08T11:42:00.794Z"
+    },
+    {
+      "id": "order_1733658184873",
+      "customerInfo": {
+        "name": "Khách hàng",
+        "phone": "0369523467",
+        "email": "",
+        "address": "",
+        "note": ""
+      },
+      "orderItems": [
+        {
+          "productId": 1,
+          "quantity": 1,
+          "price": 34900000,
+          "productName": "iPhone 15 Pro Max"
+        },
+        {
+          "productId": 2,
+          "quantity": 1,
+          "price": 45900000,
+          "productName": "MacBook Pro M3"
+        },
+        {
+          "productId": 3,
+          "quantity": 1,
+          "price": 29900000,
+          "productName": "Samsung Galaxy S24"
+        }
+      ],
+      "totalAmount": 110700000,
+      "status": "pending",
+      "createdAt": "2024-12-08T11:43:04.873Z"
+    },
+    {
+      "id": "order_1733658287433",
+      "customerInfo": {
+        "name": "Khách hàng",
+        "phone": "0369523467 ",
+        "email": "",
+        "address": "",
+        "note": ""
+      },
+      "orderItems": [
+        {
+          "productId": 2,
+          "quantity": 1,
+          "price": 45900000,
+          "productName": "MacBook Pro M3"
+        },
+        {
+          "productId": 3,
+          "quantity": 1,
+          "price": 29900000,
+          "productName": "Samsung Galaxy S24"
+        },
+        {
+          "productId": 4,
+          "quantity": 1,
+          "price": 32900000,
+          "productName": "Dell XPS 13"
+        }
+      ],
+      "totalAmount": 108700000,
+      "status": "pending",
+      "createdAt": "2024-12-08T11:44:47.433Z"
+    },
+    {
+      "id": "order_1733660910471",
+      "customerInfo": {
+        "name": "Khách hàng",
+        "phone": "0369523467",
+        "email": "",
+        "address": "",
+        "note": ""
+      },
+      "orderItems": [
+        {
+          "productId": 3,
+          "quantity": 1,
+          "price": 29900000,
+          "productName": "Samsung Galaxy S24"
+        },
+        {
+          "productId": 4,
+          "quantity": 1,
+          "price": 32900000,
+          "productName": "Dell XPS 13"
+        }
+      ],
+      "totalAmount": 62800000,
+      "status": "pending",
+      "createdAt": "2024-12-08T12:28:30.471Z"
+    }
+  ]
+}

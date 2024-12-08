@@ -1,0 +1,16 @@
+{
+  "categories": [
+    {
+      "id": "1",
+      "name": "Điện thoại",
+      "slug": "dien-thoai",
+      "createdAt": "2024-03-12T00:00:00.000Z"
+    },
+    {
+      "id": "2",
+      "name": "Laptop",
+      "slug": "laptop",
+      "createdAt": "2024-03-12T00:00:00.000Z"
+    }
+  ]
+}

@@ -1,0 +1,44 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "iPhone 15 Pro Max",
+      "price": 34900000,
+      "description": "Điện thoại iPhone mới nhất",
+      "image": "https://live.staticflickr.com/65535/54190475084_51505185ef_o.jpg",
+      "category_id": "1",
+      "createdAt": "2024-03-12T00:00:00.000Z",
+      "updatedAt": "2024-12-08T11:09:24.769Z"
+    },
+    {
+      "id": 2,
+      "name": "MacBook Pro M3",
+      "price": 45900000,
+      "description": "Laptop Apple mới nhất",
+      "image": "https://live.staticflickr.com/65535/54190475084_51505185ef_o.jpg",
+      "category_id": "2",
+      "createdAt": "2024-03-12T00:00:00.000Z",
+      "updatedAt": "2024-12-08T11:09:24.769Z"
+    },
+    {
+      "id": 3,
+      "name": "Samsung Galaxy S24",
+      "price": 29900000,
+      "description": "Điện thoại Samsung mới nhất",
+      "image": "https://live.staticflickr.com/65535/54190475084_51505185ef_o.jpg",
+      "category_id": "1",
+      "createdAt": "2024-03-12T00:00:00.000Z",
+      "updatedAt": "2024-12-08T11:09:24.769Z"
+    },
+    {
+      "id": 4,
+      "name": "Dell XPS 13",
+      "price": 32900000,
+      "description": "Laptop Dell mỏng nhẹ",
+      "image": "https://live.staticflickr.com/65535/54190475084_51505185ef_o.jpg",
+      "category_id": "2",
+      "createdAt": "2024-03-12T00:00:00.000Z",
+      "updatedAt": "2024-12-08T11:09:24.769Z"
+    }
+  ]
+}
